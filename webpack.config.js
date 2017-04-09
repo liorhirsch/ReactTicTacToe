@@ -10,15 +10,23 @@ var config = {
     path: BUILD_DIR,
     filename: 'bundle.js'
   },
+  devtool: "inline-source-map",
   module : {
       loaders : [
       {
         test : /\.jsx?/,
         include : APP_DIR,
         loader : 'babel-loader'
+      },
+      {
+          test: /\.css$/,
+          use: [ 'style-loader', 'css-loader' ]
       }
     ]
-  }
+  },
+  resolve: {
+        extensions: ['.js', '.jsx']
+    }
 };
 
 module.exports = config;

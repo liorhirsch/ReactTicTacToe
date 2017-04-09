@@ -1,0 +1,14 @@
+.square {
+    border-radius: 1px;
+    border-color: black;
+    border-width: 5px;
+    border-style: solid;
+    width : 50px;
+    height:50px;
+    font-size: xx-large;
+    text-align: center;
+}
+
+.row-class {
+    display: flex;
+}

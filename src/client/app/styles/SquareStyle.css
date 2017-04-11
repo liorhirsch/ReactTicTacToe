@@ -12,3 +12,11 @@
 .row-class {
     display: flex;
 }
+
+.clickable {
+    cursor: hand;
+}
+
+.no-clickable {
+    cursor: not-allowed;
+}

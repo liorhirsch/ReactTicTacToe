@@ -56,6 +56,9 @@ class PlayBoardBL {
                    checkIfAllVAluesEqualsToSign(secondAlahson, sign);
         }
     }
+    getValueAtCell(row,col){
+        return this._board[row][col];
+    }
 }
 
 function checkIfAllVAluesEqualsToSign(list, sign)

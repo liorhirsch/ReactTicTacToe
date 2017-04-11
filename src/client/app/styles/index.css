@@ -1,0 +1,12 @@
+h1 {
+     color: rgb(30,205,151);
+     font-family: 'Droid serif', serif; 
+     font-size: 36px; 
+     font-weight: 400; 
+     font-style: italic;
+     line-height: 44px; 
+}
+
+.center {
+    padding-left: 42%;
+}

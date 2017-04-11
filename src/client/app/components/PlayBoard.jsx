@@ -3,57 +3,66 @@ import ReactDOM from 'react-dom';
 import Square from "./Square.jsx";
 import "../styles/SquareStyle.css";
 import PlayBoardBL from "../bl/PlayBoardBL";
-
-const SIZE = 3;
+import ResetButton from "./ResetButton";
 
 class PlayBoard extends React.Component {
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
+        
         this.state = {
-            currSign: "X"
+            currSign: "X",
+            size : props.amountOfRows,
+            isGameFinished : false,
+            playBoardBL : new PlayBoardBL(props.amountOfRows)
         }
-
-        this.playBoardBL = new PlayBoardBL(SIZE);
     }
     handleTurn(row, col) {
         var oldSign = this.state.currSign;
 
         // if step valid
-        if (this.playBoardBL.handleStep(row, col, this.state.currSign)) {
+        if (this.state.playBoardBL.handleStep(row, col, this.state.currSign)) {
             var newSign = this.state.currSign == "X" ? "O" : "X";
-            this.setState({ currSign: newSign });
+            this.setState({ currSign : newSign });
 
         }
         else {
             return false;
         }
 
-        if (this.playBoardBL.checkIfLastStepIsWon(row, col, oldSign)) {
+        if (this.state.playBoardBL.checkIfLastStepIsWon(row, col, oldSign)) {
+            this.setState({isGameFinished : true});
             alert(oldSign + " WON");
         }
-        if (this.playBoardBL.checkIfTie()) {
+        else if (this.state.playBoardBL.checkIfTie()) {
+            this.setState({isGameFinished : true});
             alert("TIE");
         }
 
         return oldSign;
-
+    }
+    onReset() {
+        this.setState({playBoardBL : new PlayBoardBL(this.state.size)});
     }
     render() {
         return (
             <div>
                 {
-                    Array(SIZE).fill(null).map((x, rowIndex) => {
+                    Array(this.state.size).fill(null).map((x, rowIndex) => {
                         return (
                             <div key={"row" + rowIndex} className="row-class">
-                                {Array(SIZE).fill(null).map((a, colIndex) => {
+                                {Array(this.state.size).fill(null).map((a, colIndex) => {
                                     return (<Square handleTurn={this.handleTurn.bind(this, rowIndex, colIndex)}
-                                        sign={this.state.currSign}
-                                        key={rowIndex * SIZE + colIndex} />);
+                                                    key= {"cell" + ((rowIndex * this.state.size) + colIndex)}
+                                                    isGameFinished={this.state.isGameFinished} 
+                                                    value = {this.state.playBoardBL._board[rowIndex][colIndex]}/>);
+                                            
                                 })}
                             </div>
                         )
                     })
                 }
+
+                <ResetButton handleReset={this.onReset.bind(this)}/>
             </div>
         )
     }

@@ -49,12 +49,12 @@ class PlayBoard extends React.Component {
 
             if (this.state.playBoardBL.checkIfLastStepIsWon(row, col, oldSign)) {
                 this.setState({isGameFinished : true});
-                Alert.success(oldSign + " WON");
+                Alert.success(oldSign + " Win");
                 this.props.addNewGame(oldSign, this.state.playBoardBL, new Date().getTime());
             }
             else if (this.state.playBoardBL.checkIfTie()) {
                 this.setState({isGameFinished : true});
-                Alert.warning(oldSign + " WON");
+                Alert.warning("Tie");
                 this.props.addNewGame("Tie", this.state.playBoardBL, new Date().getTime());
             }
 

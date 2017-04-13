@@ -1,0 +1,13 @@
+.group {
+    color: #7c795d;
+    font-family: 'Trocchi',
+    serif; font-size: 45px;
+    font-weight: normal; 
+    line-height: 48px; 
+    border-color:aquamarine;
+    border-width: 3px;
+    border-style: groove;
+    width : 17%;
+    text-align: center;
+    
+}

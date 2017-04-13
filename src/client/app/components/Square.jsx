@@ -1,12 +1,11 @@
 import React from 'react';
-import "../styles/SquareStyle.css";
 
 class Square extends React.Component{
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
         this.state = {
-            value : "",
-            isGameFinished : false
+            value : props.value,
+            isGameFinished : props.isGameFinished
         }
     }
     onClick () {
@@ -27,6 +26,11 @@ class Square extends React.Component{
         );
     }
 }
+
+Square.defaultProps = {
+    value : "",
+    isGameFinished : false
+};
 
 export default Square;
 

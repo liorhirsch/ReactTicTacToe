@@ -1,9 +1,12 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import {Link} from "react-router";
+
 import Square from "./Square.jsx";
 import "../styles/SquareStyle.css";
 import PlayBoardBL from "../bl/PlayBoardBL";
 import ResetButton from "./ResetButton";
+
 
 class PlayBoard extends React.Component {
     constructor(props) {
@@ -13,7 +16,8 @@ class PlayBoard extends React.Component {
             currSign: "X",
             size : props.amountOfRows,
             isGameFinished : false,
-            playBoardBL : new PlayBoardBL(props.amountOfRows)
+            playBoardBL : new PlayBoardBL(props.amountOfRows),
+            name: " "
         }
     }
     handleTurn(row, col) {
@@ -43,9 +47,14 @@ class PlayBoard extends React.Component {
     onReset() {
         this.setState({playBoardBL : new PlayBoardBL(this.state.size)});
     }
+    updateName(e){
+        this.setState({name : e.target.value});
+    }
     render() {
         return (
             <div>
+                <input type = "text" onChange = {this.updateName.bind(this)}/>;
+                <Link to = {`/HistoryBoard/${this.state.name}`} >History With Name</Link>
                 {
                     Array(this.state.size).fill(null).map((x, rowIndex) => {
                         return (
@@ -68,5 +77,8 @@ class PlayBoard extends React.Component {
     }
 }
 
+PlayBoard.defaultProps = {
+    amountOfRows : 3
+};
 
 export default PlayBoard;

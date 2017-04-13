@@ -7,7 +7,6 @@ class PlayBoardBL {
         this._board = Array(size).fill().map(()=>Array(size).fill());
         this._maxSteps = Math.pow(size, 2);
     }
-
     handleStep(rowIndex, colIndex, sign)
     {
         if (this._board[rowIndex][colIndex])

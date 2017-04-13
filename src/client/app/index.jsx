@@ -1,19 +1,23 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
+import  {Router , Route, IndexRoute, hashHistory} from "react-router";
+import ReactDOM from "react-dom";
+
 import PlayBoard from "./components/PlayBoard.jsx";
-import "./styles/index.css";
+import HistoryBoard from "./components/HistoryBoard";
+import Main from "./components/Main";
+
+
 
 window.React = React;
 
-class App extends React.Component {
-  render () {
-    return (
-      <div className = "center">
-        <h1> Tic Tac Toe </h1>
-        <PlayBoard amountOfRows = {3} />
-      </div>
-    );
-  }
-}
 
-ReactDOM.render(<App/>, document.getElementById('app'));
+const router = (
+      <Router history = {hashHistory}>
+          <Route path = "/" component = {Main}>
+            <IndexRoute component = {PlayBoard}></IndexRoute>
+            <Route path = "/HistoryBoard/:name" component = {HistoryBoard}></Route>
+          </Route>
+      </Router>
+);
+
+ReactDOM.render(router, document.getElementById('app'));

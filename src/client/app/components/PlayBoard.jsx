@@ -36,16 +36,19 @@ class PlayBoard extends React.Component {
         if (this.state.playBoardBL.checkIfLastStepIsWon(row, col, oldSign)) {
             this.setState({isGameFinished : true});
             alert(oldSign + " WON");
+            this.props.addNewGame(oldSign, this.state.playBoardBL, new Date().getTime());
         }
         else if (this.state.playBoardBL.checkIfTie()) {
             this.setState({isGameFinished : true});
             alert("TIE");
+            this.props.addNewGame("Tie", this.state.playBoardBL, new Date().getTime());
         }
 
         return oldSign;
     }
     onReset() {
         this.setState({playBoardBL : new PlayBoardBL(this.state.size)});
+        this.setState({isGameFinished : false});
     }
     updateName(e){
         this.setState({name : e.target.value});
@@ -55,6 +58,7 @@ class PlayBoard extends React.Component {
             <div>
                 <input type = "text" onChange = {this.updateName.bind(this)}/>;
                 <Link to = {`/HistoryBoard/${this.state.name}`} >History With Name</Link>
+
                 {
                     Array(this.state.size).fill(null).map((x, rowIndex) => {
                         return (

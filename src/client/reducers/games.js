@@ -1,6 +1,14 @@
 function games(state = [], action) {
-    console.log(state, action);
-    return state;
+    switch (action.type) {
+        case "ADD_NEW_GAME" :
+            return [
+                ...state,
+                {winner : action.winner, board : action.board, time : action.time}
+            ];
+        default:
+            return state;
+    }
+    
 }
 
 export default games;

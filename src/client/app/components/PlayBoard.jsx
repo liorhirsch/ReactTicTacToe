@@ -39,23 +39,23 @@ class PlayBoard extends React.Component {
 
             // if step valid
             if (this.state.playBoardBL.handleStep(row, col, this.state.currSign)) {
-                var newSign = this.state.currSign == "X" ? "O" : "X";
-                this.setState({ currSign : newSign });
-
+                if (this.state.playBoardBL.checkIfLastStepIsWon(row, col, oldSign)) {
+                    this.setState({isGameFinished : true});
+                    Alert.success(oldSign + " Win");
+                    this.props.addNewGame(oldSign, this.state.playBoardBL, new Date().getTime());
+                }
+                else if (this.state.playBoardBL.checkIfTie()) {
+                    this.setState({isGameFinished : true});
+                    Alert.warning("Tie");
+                    this.props.addNewGame("Tie", this.state.playBoardBL, new Date().getTime());
+                }
+                else {
+                    var newSign = this.state.currSign == "X" ? "O" : "X";
+                    this.setState({ currSign : newSign });
+                }
             }
             else {
                 return false;
-            }
-
-            if (this.state.playBoardBL.checkIfLastStepIsWon(row, col, oldSign)) {
-                this.setState({isGameFinished : true});
-                Alert.success(oldSign + " Win");
-                this.props.addNewGame(oldSign, this.state.playBoardBL, new Date().getTime());
-            }
-            else if (this.state.playBoardBL.checkIfTie()) {
-                this.setState({isGameFinished : true});
-                Alert.warning("Tie");
-                this.props.addNewGame("Tie", this.state.playBoardBL, new Date().getTime());
             }
 
             return oldSign;
@@ -100,7 +100,7 @@ class PlayBoard extends React.Component {
                 (
                     <div>                        
                         <ResetButton handleReset={this.onReset.bind(this)}/>
-                        <PointsBoard {...this.props} />
+                        <PointsBoard games = {this.props.games} />
                     </div>
                 )}
                 
@@ -112,5 +112,7 @@ class PlayBoard extends React.Component {
 PlayBoard.defaultProps = {
     amountOfRows : 3
 };
+
+reduxComponent
 
 export default PlayBoard;

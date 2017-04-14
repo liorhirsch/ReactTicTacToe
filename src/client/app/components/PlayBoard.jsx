@@ -113,6 +113,4 @@ PlayBoard.defaultProps = {
     amountOfRows : 3
 };
 
-reduxComponent
-
 export default PlayBoard;

@@ -1,4 +1,8 @@
-import React, { Component } from 'react'
+import React, { Component } from 'react';
+import { connect } from "react-redux";
+import {bindActionCreators} from "redux";
+import {resetGamesHistory} from "../../actions/actionCreator";
+
 import "../styles/PointsBoard.css"
 
 class PointsBoard extends Component {
@@ -11,20 +15,26 @@ class PointsBoard extends Component {
             }
         }
     }
-    componentWillReceiveProps(props) {        
+    componentWillReceiveProps(props) {
+        let pointsPerPlayer = {X : 0, O : 0};
+
         if (props.games.length > 0) {
-            let pointsPerPlayer = props.games.reduce((obj, val) => {
+            props.games.reduce((obj, val) => {
                 obj[val.winner]++;
                 return obj;
-            },{X : 0, O : 0});
-
-            this.setState({total : pointsPerPlayer});
+            }, pointsPerPlayer);
         }
+
+        this.setState({total : pointsPerPlayer});
+    }
+    resetHistory() {
+        this.props.resetGamesHistory();
     }
     render () {
         return (
             <div>
                 <h1>Points Board</h1>
+                <button onClick={() => this.resetHistory()}>Reset History</button>
                 <div className = "group">
                     <span>X : </span>
                     <span>{this.state.total.X}</span>
@@ -38,4 +48,19 @@ class PointsBoard extends Component {
     }
 }
 
-export default PointsBoard
+function mapStateToProps(state){
+    return {
+        games : state.games
+    }
+}
+
+function mapDispatchToProps(dispatch) {
+    return {
+        resetGamesHistory : () => dispatch(resetGamesHistory())
+    }
+}
+
+
+const PointsBoardWithGames = connect(mapStateToProps, mapDispatchToProps)(PointsBoard);
+
+export default PointsBoardWithGames

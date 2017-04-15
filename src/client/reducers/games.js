@@ -5,6 +5,8 @@ function games(state = [], action) {
                 ...state,
                 {winner : action.winner, board : action.board, time : action.time}
             ];
+        case "RESET_GAMES":
+            return [];
         default:
             return state;
     }

@@ -98,9 +98,9 @@ class PlayBoard extends React.Component {
 
                 {this.state.readOnlyMode ? null : 
                 (
-                    <div>                        
+                    <div>
                         <ResetButton handleReset={this.onReset.bind(this)}/>
-                        <PointsBoard games = {this.props.games} />
+                        <PointsBoard/>
                     </div>
                 )}
                 
